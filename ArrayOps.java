@@ -1,65 +1,71 @@
 public class ArrayOps {
     public static void main(String[] args) {
+        int[] asdf = {0,1,2,3,4,6,6};
+        // int[] qwer = {1,2,4};
+        // System.out.println(findMissingInt(asdf));
+        System.out.println(secondMaxValue(asdf));
+        // System.out.println(containsTheSameElements(asdf, qwer));
+        // System.out.println(isSorted(asdf));
+ 
     }
     
     public static int findMissingInt (int [] array) {
-        int n = array.length;
-        int sum  = n * (n + 1) / 2;
-        for (int i = 0; i < n; i++) {
-            sum-= array[i];
+        int n=array.length;
+        int sumTrue = (n*(n+1)/2); 
+        int sum=0;
+        for (int i : array) {
+            sum+=i;
         }
-        return sum;
+        return sumTrue-sum;
     }
 
     public static int secondMaxValue(int [] array) {
-        int n = array.length;
-        int max = 0;
-        int max2 = 0;
-        for (int i = 0; i < n; i++) {
-            if (array[i] >= max) {
-                max2 = max;
-                max = array[i];
-            }
+        int max=0;
+        int max2=0;
+        int count=0;
+        for (int i : array) {
+            if (i>max) {max=i;}
+        }
+        for (int i : array) {
+            if (i==max) count++;
+        }
+        if (count>1) {return max;}
+        for (int i : array) {
+            if (max>i && max2<i) {max2=i;}
         }
         return max2;
     }
-    public static boolean containsTheSameElements(int [] array1,int [] array2) {
-        int n = array1.length;
-        int m = array2.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (array1[i] == array2[j]) {
-                    break;
-                }
-                else if (j == m - 1) {
-                    return false;
-                }
-            }
-        }
-        for (int j = 0; j < m; j++) {
-            for (int i = 0; i < n; i++) {
-                if (array2[j] == array1[i]) {
-                    break;
-                }
-                else if (i == n - 1) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-    public static boolean isSorted(int [] array) {
-        int n = array.length;
-        boolean increasing = array[0] < array[1];
 
-        for (int i = 0; i < n - 1; i++) {
-            if (array[i] > array[i + 1] && increasing == true) {
-                return false;
-            } else if (array[i] < array[i + 1] && increasing == false) {
-                return false;
+    public static boolean containsTheSameElements(int [] array1,int [] array2) {
+        boolean truthAll = true;
+        boolean[] truth = new boolean[Math.max(array1.length, array2.length)];
+        int[] arrLong = (array1.length>=array2.length) ? array1 : array2 ;
+        int[] arrShort = (array1.length>=array2.length) ? array2 : array1 ;
+        for (int i=0; i<arrLong.length; i++) {
+            for (int j : arrShort) {
+                if (j==arrLong[i]) {
+                    truth[i]=true;
+                    break;
+                } else truth[i]=false;
             }
         }
-        return true;
+        for (boolean i : truth) {
+            if (i==false) truthAll = false;
+        }
+        return truthAll;
+    }
+
+    public static boolean isSorted(int [] array) {
+        boolean asc=true;  
+        boolean desc=true;
+        for (int i=0; i<array.length-1; i++) {
+            if (array[i]<array[i+1]) {
+                desc=false;
+            } else if (array[i]>array[i+1]) {
+                asc=false;
+            }
+        }
+        return asc||desc;
     }
 
 }
