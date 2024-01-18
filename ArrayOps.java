@@ -3,6 +3,7 @@ public class ArrayOps {
         int[] testCase1 = {2, 8, 3, 7, 8};
         System.out.println(secondMaxValue(testCase1));
     }
+
     public static int findMissingInt(int[] array) {
         int n = array.length;
 
